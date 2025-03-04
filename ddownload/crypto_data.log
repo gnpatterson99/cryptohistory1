@@ -1,0 +1,70 @@
+2025-02-21 18:20:30,014:INFO:Programm started
+2025-02-22 07:48:21,417:INFO:Programm started
+2025-02-22 07:50:38,914:INFO:Programm started
+2025-02-22 07:50:54,396:INFO:Programm started
+2025-02-22 07:51:07,456:INFO:Programm started
+2025-02-28 20:48:19,832:INFO:Programm started
+2025-02-28 20:52:40,107:INFO:Programm started
+2025-03-01 16:20:47,745:INFO:Programm started
+2025-03-02 10:16:45,795:INFO:Programm started
+2025-03-02 10:21:36,430:INFO:Programm started
+2025-03-02 10:21:52,066:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:21:58,978:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:05,812:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:12,765:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:19,865:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:26,611:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:31,252:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:22:33,768:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:38,014:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:22:40,515:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:45,032:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:22:47,479:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:51,967:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:22:54,128:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:22:58,700:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:01,013:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:23:05,865:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:08,381:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:23:13,055:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:15,467:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:23:19,690:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:22,202:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:23:26,645:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:29,059:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:23:33,518:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:36,103:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:23:40,684:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:43,165:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:23:48,067:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:50,608:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:23:55,165:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:23:57,512:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:01,917:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:24:04,660:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:09,115:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:24:11,447:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:15,585:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:24:18,467:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:19,407:ERROR:Error removing RONIN-USD: list.remove(x): x not in list
+2025-03-02 10:24:22,721:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:24:25,134:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:26,108:ERROR:Error removing RONIN-USD: list.remove(x): x not in list
+2025-03-02 10:24:29,539:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:24:29,723:ERROR:Error removing RENDER-USD: list.remove(x): x not in list
+2025-03-02 10:24:31,843:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:32,851:ERROR:Error removing RONIN-USD: list.remove(x): x not in list
+2025-03-02 10:24:36,405:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:24:36,634:ERROR:Error removing RENDER-USD: list.remove(x): x not in list
+2025-03-02 10:24:38,762:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:39,791:ERROR:Error removing RONIN-USD: list.remove(x): x not in list
+2025-03-02 10:24:42,393:ERROR:Error removing ONDO-USD: list.remove(x): x not in list
+2025-03-02 10:24:43,317:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:24:43,539:ERROR:Error removing RENDER-USD: list.remove(x): x not in list
+2025-03-02 10:24:46,106:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:47,374:ERROR:Error removing RONIN-USD: list.remove(x): x not in list
+2025-03-02 10:24:49,966:ERROR:Error removing ONDO-USD: list.remove(x): x not in list
+2025-03-02 10:24:50,724:ERROR:Error removing POL-USD: list.remove(x): x not in list
+2025-03-02 10:24:50,937:ERROR:Error removing RENDER-USD: list.remove(x): x not in list
+2025-03-02 10:24:53,432:ERROR:Error removing FLOKI-USD: list.remove(x): x not in list
+2025-03-02 10:24:54,570:ERROR:Error removing RONIN-USD: list.remove(x): x not in list
