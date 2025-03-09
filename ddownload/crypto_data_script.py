@@ -156,6 +156,9 @@ def loop_dates(start_date_str, end_date_str, file_name, assets):
 
 
 if __name__ == "__main__":
-    loop_dates("2024-01-01", "2024-12-31", "2024.t2.year.csv", assets)
+    # loop_dates("2024-01-01", "2024-12-31", "2024.t2.year.csv", assets)
+    # loop_dates("2023-09-01", "2023-12-31", "2023.q4.csv", assets)
+    loop_dates("2023-06-01", "2023-08-31", "2023.q3.csv", assets)
+    loop_dates("2023-03-01", "2023-05-31", "2023.q3.csv", assets)
 
 

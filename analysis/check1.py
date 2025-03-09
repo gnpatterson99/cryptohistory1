@@ -13,18 +13,10 @@ tmp_df = pd.read_csv("/Users/george/PycharmProjects/cryptohistory1/ddownload/202
 def cleanup(input_df):
     mydf = input_df.copy()
     mydf['datetime'] = pd.to_datetime(mydf.Date)
-    # mydf.head()
-    # mydf.datetime.dt
-    # mydf.datetime.dt.hour
-    # mydf.datetime.dt.date
-    # mydf['datetime'].duplicated().sum()
-    # mydf['datetime'].duplicated()
-    # ~mydf['datetime'].duplicated()
     mydf2 = mydf[~mydf[['datetime','Currency']].duplicated()].copy()
     mydf2['hour'] = mydf2.datetime.dt.hour
     mydf2['date'] = mydf2.datetime.dt.date
     mydf2['hlspread'] = (mydf2.High - mydf2.Low) / mydf2.Close
-
     return mydf2
 
 
@@ -35,6 +27,8 @@ def plot_c_ts(dfin, cname, title):
     plt.plot(tmp_df.date, tmp_df.Close)
     plt.title(cname)
     plt.show()
+
+tmp_df2 = cleanup(tmp_df)
 
 plot_c_ts(tmp_df2, 'BTC-USD','foo')
 plot_c_ts(tmp_df2, 'ETH-USD','foo')
@@ -76,36 +70,66 @@ tmp_df2 = cleanup(tmp_df)
 tmp_df2['Currency'].value_counts()
 
 
-btc = tmp_df[ tmp_df.Currency == 'BTC-USD']
-type(btc.Date[0])
-btc['datetime'] = pd.to_datetime(btc.Date)
-btc.head()
-btc.datetime.dt
-btc.datetime.dt.hour
-btc.datetime.dt.date
-btc['datetime'].duplicated().sum()
-btc['datetime'].duplicated()
-~btc['datetime'].duplicated()
+def plot_vol_by_hour(dfin, cname):
+    tmp_df = dfin[ dfin.Currency == cname]
+
+    vol_by_hour = tmp_df.groupby('hour').agg({'Volume':'median','hlspread':'median'})
+    vol_by_hour = vol_by_hour.reset_index()
+    vol_by_hour.head()
+    plt.bar(vol_by_hour.hour, vol_by_hour.Volume)
+    plt.title(f"Volume by hour {cname}")
+    plt.show()
+
+    plt.plot(vol_by_hour.hour, vol_by_hour.hlspread)
+    plt.title(f"Volatility by hour {cname}")
+    plt.show()
+
+plot_vol_by_hour(tmp_df2, 'BTC-USD')
+
+def vol_traded_by_currency(dfin):
+    tmp_df = dfin[ dfin['hour'] == 10]
+    tmp_df['DollarVolume'] = tmp_df.Volume * tmp_df.Close
+    vol_by_currency = tmp_df.groupby('Currency').agg({'DollarVolume':'sum',})
+    vol_by_currency  =vol_by_currency.sort_values("DollarVolume")
+    vol_by_currency = vol_by_currency.reset_index()
+    plt.bar(vol_by_currency.index, vol_by_currency.DollarVolume)
+    plt.show()
+    return vol_by_currency
+
+vol_traded_by_currency(tmp_df2)
+
+def currencies_no_trading(dfin, target_hour=10):
+    tmp_df = dfin[ dfin['hour'] == target_hour].copy()
+    min_date_by_currency = tmp_df.groupby('Currency').agg({'datetime':'min'})
+    date_list = tmp_df.datetime.unique().tolist()
+
+    for mycurr in min_date_by_currency.index:
+        my_min_date = min_date_by_currency.loc[mycurr,'datetime']
+        date_list2 = [i for i in date_list if i >= my_min_date]
+        if len(date_list2) == 0:
+            print("No dates in datelist2")
+            continue
 
 
-btc2 = btc[~btc['datetime'].duplicated()].copy()
+        seen_dates = tmp_df[tmp_df.Currency == mycurr].datetime.unique().tolist()
+        missing_dates = set(date_list2) - set(seen_dates)
+        missing_dates = list(missing_dates)
+        missing_dates.sort()
+        if len(missing_dates) > 0:
+            print(f"Missing dates {mycurr} at hour {target_hour} First Record: {my_min_date}")
+            for my_missing in missing_dates:
+                print(f"{my_missing}")
+               # print(tmp_df[(tmp_df.Currency == mycurr) & (tmp_df.datetime == my_missing)])
+            print("\n\n")
 
+currencies_no_trading(tmp_df2,target_hour=20)
 
-btc2['hour'] = btc2.datetime.dt.hour
-btc2['hlspread'] = (btc2.High - btc2.Low) / btc2.Close
-
-
-vol_by_hour = btc2.groupby('hour').agg({'Volume':'median','hlspread':'median'})
-vol_by_hour = vol_by_hour.reset_index()
-vol_by_hour.head()
-plt.bar(vol_by_hour.hour, vol_by_hour.Volume)
-plt.show()
-
-plt.plot(vol_by_hour.hour, vol_by_hour.hlspread)
-plt.show()
-
-
-
-tmp_df2.groupby('Currency').agg({'datetime':'min'})
-
-print("hello world")
+plimits = tmp_df2.groupby('Currency')['Close'].agg('min')
+plimits = plimits.reset_indexd()
+plimits = plimits.reset_index()
+plimits
+plimits.head()
+plimits.Close > 1.0
+(plimits.Close > 1.0).sum()
+(plimits.Close > 0.5).sum()
+(plimits.Close > 0.1).sum()
