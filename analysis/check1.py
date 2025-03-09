@@ -107,3 +107,5 @@ plt.show()
 
 
 tmp_df2.groupby('Currency').agg({'datetime':'min'})
+
+print("hello world")
