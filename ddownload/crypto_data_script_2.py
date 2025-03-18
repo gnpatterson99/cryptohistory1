@@ -12,24 +12,34 @@ logging.basicConfig(filename='crypto_data.log', level=logging.INFO,
 logging.info("Program started")
 print("Program started")
 
-start_date = input("Set start date(Format:2024-02-20T12:00:00)=")
-end_date = input("Set end date(Format:2024-03-20T12:00:00=")
+# start_date = input("Set start date(Format:2024-02-20T12:00:00)=")
+# end_date = input("Set end date(Format:2024-03-20T12:00:00=")
+#
+# kraken_interval = input("Set interval kraken[1, 5, 15, 30, 60, 240, 1440, 10080, 21600](in minutes)")
+# binance_interval = input("Set interval binance[1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M]")
+# coinbase_interval = input("Set interval coinbase[60(1m), 300(5m), 900(15m), 3600(1h), 21600(6h), 86400(1d)]")
 
-kraken_interval = input("Set interval kraken[1, 5, 15, 30, 60, 240, 1440, 10080, 21600](in minutes)")
-binance_interval = input("Set interval binance[1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M]")
-coinbase_interval = input("Set interval coinbase[60(1m), 300(5m), 900(15m), 3600(1h), 21600(6h), 86400(1d)]")
+start_date = None
+end_date = None
+
+kraken_interval = None
+binance_interval = None
+coinbase_interval = None
+
+
 
 api_endpoints = {
 
     'Coinbase': "https://api.exchange.coinbase.com/products/{}/candles?start={}&end={}&granularity={}",
-    'Kraken': "https://api.kraken.com/0/public/OHLC?pair={}&since={}&interval={}",
-    'Binance': "https://api.binance.us/api/v3/klines?symbol={}&startTime={}&endTime={}&interval={}"
+#    'Kraken': "https://api.kraken.com/0/public/OHLC?pair={}&since={}&interval={}",
+#    'Binance': "https://api.binance.us/api/v3/klines?symbol={}&startTime={}&endTime={}&interval={}"
 
 }
 
 binance_interval_map = {"1m": 60, "3m": 180, "5m": 300, "15m": 900, "30m": 1800, "1h": 3600, "2h": 7200, "4h": 14400,
                         "6h": 21600, "8h": 28800, "12h": 43200, "1d": 86400, "3d": 259200, "1w": 604800, "1M": 2592000}
 
+# TODO: needs to be moved to main to work.
 excahnge_to_interval = {"Coinbase": coinbase_interval,
                         "Kraken": kraken_interval,
                         "Binance": binance_interval}
@@ -231,45 +241,58 @@ def create_file(rows):
     print("Successfully wrote data to file " + file_name)
 
 
-for api_endpoint, url_str in api_endpoints.items():
-    rows = []
-    for coin in API_SYMBOL_MAPPIN.keys():
-        try:
-            symbol = API_SYMBOL_MAPPIN[coin][api_endpoint]
-        except KeyError:
-            print("Coin " + coin + " isn't defined for " + api_endpoint)
-            continue
+if __name__ == "__main__":
 
-        data = batch_request_by_limits(start_date, end_date, ENDPOINT_TO_LIMIT[api_endpoint],
-                                       api_endpoint, url_str, symbol, excahnge_to_interval[api_endpoint])
+    # start_date = input("Set start date(Format:2024-02-20T12:00:00)=")
+    # end_date = input("Set end date(Format:2024-03-20T12:00:00=")
 
-        if not data:
-            print("Couldn't get data for " + coin)
+    start_date = "2024-02-20T12:00:00"
+    end_date = "2024-03-20T12:00:00"
 
-        print("Fetched data for " + coin + " from " + api_endpoint)
 
-        if api_endpoint == "Kraken":
-            if data[0].get("error"):
-                print("Error for coin " + symbol)
-                print(data[0].get("error"))
-                continue
+    kraken_interval = 60 #input("Set interval kraken[1, 5, 15, 30, 60, 240, 1440, 10080, 21600](in minutes)")
+    binance_interval = "1h" #input("Set interval binance[1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M]")
+    coinbase_interval = 86400 #input("Set interval coinbase[60(1m), 300(5m), 900(15m), 3600(1h), 21600(6h), 86400(1d)]")
+
+    for api_endpoint, url_str in api_endpoints.items():
+        rows = []
+        for coin in API_SYMBOL_MAPPIN.keys():
             try:
-                row = handle_kraken_data(data)
-            except ValueError as e:
-                print("The defined timerange for kraken is even with batching to big. "
-                      "Define a new timerange.")
+                symbol = API_SYMBOL_MAPPIN[coin][api_endpoint]
+            except KeyError:
+                print("Coin " + coin + " isn't defined for " + api_endpoint)
                 continue
-            if row is None:
-                continue
-            rows += row
-        elif api_endpoint == "Coinbase":
-            row = handle_coinbase_data(data)
-            if row is None:
-                continue
-            rows += row
-        else:
-            row = handle_binance_data(data)
-            if row is None:
-                continue
-            rows += row
-    create_file(rows)
+
+            data = batch_request_by_limits(start_date, end_date, ENDPOINT_TO_LIMIT[api_endpoint],
+                                           api_endpoint, url_str, symbol, excahnge_to_interval[api_endpoint])
+
+            if not data:
+                print("Couldn't get data for " + coin)
+
+            print("Fetched data for " + coin + " from " + api_endpoint)
+
+            if api_endpoint == "Kraken":
+                if data[0].get("error"):
+                    print("Error for coin " + symbol)
+                    print(data[0].get("error"))
+                    continue
+                try:
+                    row = handle_kraken_data(data)
+                except ValueError as e:
+                    print("The defined timerange for kraken is even with batching to big. "
+                          "Define a new timerange.")
+                    continue
+                if row is None:
+                    continue
+                rows += row
+            elif api_endpoint == "Coinbase":
+                row = handle_coinbase_data(data)
+                if row is None:
+                    continue
+                rows += row
+            else:
+                row = handle_binance_data(data)
+                if row is None:
+                    continue
+                rows += row
+        create_file(rows)

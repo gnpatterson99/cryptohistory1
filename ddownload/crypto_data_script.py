@@ -95,7 +95,10 @@ def loop_dates(start_date_str, end_date_str, file_name, assets):
     start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
     end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
 
-    local_assets = assets.copy()
+    local_assets = []
+    for coin in assets:
+        coin_symbol = coin.replace("_", "-")
+        local_assets.append(coin_symbol)
 
     print("Trying to get price and volume for the following coins: " + str(assets))
 
@@ -111,7 +114,8 @@ def loop_dates(start_date_str, end_date_str, file_name, assets):
 
             # Loop through all assets to fetch data for the current date range
             for coin in local_assets:
-                coin_symbol = coin.replace("_", "-")
+#                coin_symbol = coin.replace("_", "-")
+                coin_symbol = coin
                 for exchange in api_endpoints.keys():
                     interval_data = get_price_interval(
                         exchange,
@@ -130,7 +134,7 @@ def loop_dates(start_date_str, end_date_str, file_name, assets):
                             logging.error(f"Error removing {coin_symbol}: {e}")
                         continue
 
-                    print(f"Fetched data for {coin_symbol} for range {prior_date.strftime('%Yh-%m-%d')} to {current_date.strftime('%Y-%m-%d')}")
+                    print(f"Fetched data for {coin_symbol} for range {prior_date.strftime('%Y-%m-%d')} to {current_date.strftime('%Y-%m-%d')}")
                     try:
                         for timestamp in interval_data:
                             row = [
@@ -158,7 +162,12 @@ def loop_dates(start_date_str, end_date_str, file_name, assets):
 if __name__ == "__main__":
     # loop_dates("2024-01-01", "2024-12-31", "2024.t2.year.csv", assets)
     # loop_dates("2023-09-01", "2023-12-31", "2023.q4.csv", assets)
-    loop_dates("2023-06-01", "2023-08-31", "2023.q3.csv", assets)
-    loop_dates("2023-03-01", "2023-05-31", "2023.q3.csv", assets)
+    # loop_dates("2023-06-01", "2023-08-31", "2023.q3.csv", assets)
+    # loop_dates("2023-02-27", "2023-05-31", "2023.q2.csv", assets)
+    # loop_dates("2022-12-31", "2023-02-28", "2023.q1.csv", assets)
+    # loop_dates("2021-12-31", "2022-12-31", "2022.year.csv", assets)
+    # loop_dates("2021-12-31", "2022-11-01", "2022b.year.csv", assets)
+    loop_dates("2023-02-21", "2023-03-06", "data/backfill.1.csv", assets)
+    loop_dates("2024-03-09", "2024-03-11", "data/backfill.2.csv", assets)
 
 
