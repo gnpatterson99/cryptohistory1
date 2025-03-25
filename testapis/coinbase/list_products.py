@@ -36,8 +36,9 @@ for i in data:
 with open('list_products.pickle', 'wb') as handle:
     pickle.dump( data, handle)
 
-with open('list_products.pickle', 'rb') as handle:
-    data = pickle.load(handle)
+#with open('list_products.pickle', 'rb') as handle:
+with open('testapis/coinbase/list_products.pickle', 'rb') as handle:
+        data = pickle.load(handle)
 
 usd_pairs = [x['id'] for x in data if ((x.get('quote_currency')== 'USD') * (x.get('status')!='disabled'))]
 
@@ -58,12 +59,24 @@ margin_enabled	post_only	limit_only	cancel_only
 
 
 url="https://api.exchange.coinbase.com/product_book?product_id=BTC-USD" # does not work
-url='https://api.coinbase.com/api/v3/brokerage/product_book?product_id=BTC-USD'
+url='https://api.coinbase.com/api/v3/brokerage/product_book?product_id=BTC-USD' # does not work
+url='https://api.exchange.coinbase.com/products/BTC-USD/book' # works
+url='https://api.exchange.coinbase.com/products/BTC-USD/book?level=2' # works
+url='https://api.exchange.coinbase.com/products/FLOKI-USD/book?level=2' # works
+
+
 response = requests.get(url)
 data = response.json()
 
-curl -L 'https://api.coinbase.com/api/v3/brokerage/product_book?product_id=BTC-USD'
--H 'Content-Type: application/json'
+aa = [(float(x),float(y)) for (x,y,z) in data['bids'][0:10]]
+import pandas as pd
+adf = pd.DataFrame(aa, columns=['x','y'])
+adf = adf.sort_values('x')
+plt.plot(adf.x, adf.y)
+plt.show()
+adf['value'] = adf.x * adf.y / 10**5
+adf
+
 
 # Save a dictionary into a pickle file.
 
@@ -72,3 +85,5 @@ curl -L 'https://api.coinbase.com/api/v3/brokerage/product_book?product_id=BTC-U
 # pickle.dump( favorite_color, open( "save.p", "wb" ) )
 # favorite_color = pickle.load( open( "save.p", "rb" ) )
 # favorite_color is now { "lion": "yellow", "kitty": "red" }
+
+
